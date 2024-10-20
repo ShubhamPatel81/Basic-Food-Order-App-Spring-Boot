@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ecommerce.model.Product;
 import com.ecommerce.repository.ProductRepo;
-import com.paytm.miniapp.utils.StringUtil;
+//import com.paytm.miniapp.utils.StringUtil;
 
 @Service
 public class ProductService {
@@ -24,26 +27,27 @@ public class ProductService {
 	
 
 
-    public List<Product> getAllProduct(String sortBy, String order) {
-        boolean isAscending = StringUtils.hasText(order) && order.equalsIgnoreCase("asc");
+	public Page<Product> getAllProduct(String sortBy, String order, int pageNumber, int pageSize) {
+	    // Determine sort direction (ascending or descending)
+	    boolean isAscending = StringUtils.hasText(order) && order.equalsIgnoreCase("asc");
 
-        // Default sorting to name if no valid sortBy value is provided
-        Sort sort;
-        if ("sortByName".equalsIgnoreCase(sortBy)) {
-            sort = Sort.by(isAscending ? Sort.Direction.ASC : Sort.Direction.DESC, "name");
-        } 
-        
-        else if ("sortByDate".equalsIgnoreCase(sortBy)) {
-            sort = Sort.by(isAscending ? Sort.Direction.ASC : Sort.Direction.DESC, "date");
-        } 
-        
-        else {
-            // Default sorting if "none" or invalid sortBy value is provided
-            sort = Sort.unsorted();
-        }
+	    // Default sorting based on the sortBy parameter
+	    Sort sort;
+	    if ("sortByName".equalsIgnoreCase(sortBy)) {
+	        sort = Sort.by(isAscending ? Sort.Direction.ASC : Sort.Direction.DESC, "name");
+	    } else if ("sortByDate".equalsIgnoreCase(sortBy)) {
+	        sort = Sort.by(isAscending ? Sort.Direction.ASC : Sort.Direction.DESC, "date");
+	    } else {
+	        // Default sorting or no sorting (unsorted)
+	        sort = Sort.unsorted();
+	    }
 
-        return productRepo.findAll(sort);
-    }
+	    // Create a pageable object that includes both page number, page size, and sorting
+	    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, sort);  // pageNumber is 0-based in Spring
+
+	    // Fetch the page of products from the repository
+	    return productRepo.findAll(pageable);  // Return the entire page object, not just the content
+	}
 
     
     

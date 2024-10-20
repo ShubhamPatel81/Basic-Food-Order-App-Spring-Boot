@@ -905,3 +905,9 @@ ALTER TABLE product MODIFY description VARCHAR(500) [42001-200]
 2024-10-01 09:54:33 jdbc[23]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ALTER TABLE PRODUCT MODIFY[*] DESCRIPTION VARCHAR(500)"; expected "., ADD, SET, RENAME, DROP, ALTER"; SQL statement:
 ALTER TABLE product MODIFY description VARCHAR(500) [42001-200]
+2024-10-11 10:17:52 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ESLECT[*] * FROM ROLES"; expected "EXPLAIN, EXECUTE"; SQL statement:
+eslect * from roles [42001-200]
+2024-10-11 10:18:52 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USER" not found; SQL statement:
+select * from user [42102-200]

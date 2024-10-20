@@ -1,125 +1,104 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-          crossorigin="anonymous">
-    <link rel="stylesheet"
-          href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-          crossorigin="anonymous">
-          <link rel="stylesheet" th:href="@{/style/style.css}"
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+<link rel="stylesheet" th:href="@{/style/style.css}"
 	href="style/style.css">
-          
-    <title>Welcome to Our Store</title>
-
-    <style>
-        /* Custom styles */
-        .card-img-top {
-            height: 200px; /* Fixed height for images */
-            object-fit: cover; /* Maintain aspect ratio */
-        }
-
-        .hero {
-            background: url('https://via.placeholder.com/1920x400') no-repeat center center/cover;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: bold;
-        }
-
-        .footer {
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            text-align: center;
-        }
-    </style>
+<title>Welcome to Our Store</title>
 </head>
 
 <body>
+	<!-- Include Navbar -->
+	<div th:replace="navbar.html"></div>
 
-  <!-- Include Navbar -->
-    <div th:replace="navbar.html"></div>
-<!-- Hero Section -->
-<div class="hero">
-    <h1>Welcome to Our Store</h1>
-    <p>Your one-stop shop for all your needs!</p>
-</div>
+	<!-- Hero Section -->
+	<div class="hero">
+		<video autoplay muted loop playsinline id="hero-video">
+			<source src="./images/hero.mp4" type="video/mp4">
+			Your browser does not support the video tag.
+		</video>
+		<div class="content">
+			<h1>Welcome to Our Store</h1>
+			<p>Your one-stop shop for all your needs!</p>
+		</div>
+	</div>
 
-<div class="container mt-4">
-    <!-- Sorting Form -->
-    <div class="row mb-3">
-        <div class="col-md-12 d-flex justify-content-end">
-            <form action="#" method="get" class="form-inline">
-                <div class="form-group mr-2">
-                    <label for="sortBy" class="mr-2">Sort By:</label>
-                    <select name="sortBy" id="sortBy" class="form-control">
-                        <option value="none">None</option>
-                        <option value="sortByName">Name</option>
-                        <option value="sortByDate">Date</option>
-                    </select>
-                </div>
+	<!-- Product Listing and Sorting -->
+	<div class="container mt-4">
+		<div class="row mb-3">
+			<div class="col-md-12 d-flex justify-content-end">
+				<form action="#" method="get" class="form-inline">
+					<div class="form-group mr-2">
+						<label for="sortBy" class="mr-2">Sort By:</label> <select
+							name="sortBy" id="sortBy" class="form-control">
+							<option value="none">None</option>
+							<option value="sortByName">Name</option>
+							<option value="sortByDate">Date</option>
+						</select>
+					</div>
+					<div class="form-group mr-2">
+						<label for="order" class="mr-2">Order:</label> <select
+							name="order" id="order" class="form-control">
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">Sort</button>
+				</form>
+			</div>
+		</div>
 
-                <div class="form-group mr-2">
-                    <label for="order" class="mr-2">Order:</label>
-                    <select name="order" id="order" class="form-control">
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
-                </div>
+		<div class="row">
+			<!-- Display products -->
+			<div class="col-md-4 col-lg-3 mb-4" th:each="product : ${products}">
+				<div class="card h-100">
+					<img class="card-img-top img-fluid"
+						th:src="@{/productImages/{imageName}(imageName=${product.imageName})}"
+						alt="Product Image">
+					<div class="card-body d-flex flex-column">
+						<h5 class="card-title text-truncate" th:text="${product.name}">Product
+							Name</h5>
+						<p class="card-text text-truncate"
+							th:text="${product.description}">Product description</p>
+						<p class="card-text product-price text-success">
+							₹ <span th:text="${product.price}">0.00</span>
+						</p>
+						<a th:href="@{/shop/viewproduct/{id}(id=${product.id})}"
+							class="btn btn-primary mt-auto">View Product</a>
+					</div>
+				</div>
+			</div>
+		</div>
 
-                <button type="submit" class="btn btn-primary">Sort</button>
-            </form>
-        </div>
-    </div>
+		<!-- Pagination Controls -->
+		<div th:replace="pagination.html"></div>
+	</div>
 
-    <div class="row">
-        <!-- Display products -->
-        <div class="col-md-4 col-lg-3 mb-4" th:each="product : ${products}">
-            <div class="card h-100">
-                <img class="card-img-top img-fluid" th:src="@{/productImages/{imageName}(imageName=${product.imageName})}" alt="Product Image">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title text-truncate" th:text="${product.name}">Product Name</h5>
-                    <p class="card-text text-truncate" th:text="${product.description}">Product description</p>
-                    <p class="card-text product-price text-success">₹ <span th:text="${product.price}">0.00</span></p>
-                    <a th:href="@{/shop/viewproduct/{id}(id=${product.id})}" class="btn btn-primary mt-auto">View Product</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<!-- Footer -->
+	<div class="footer">
+		<div class="container">
+			<p>&copy; 2024 Our Store. All rights reserved.</p>
+			<ul class="list-inline">
+				<li class="list-inline-item"><a href="#" class="text-muted">Privacy
+						Policy</a></li>
+				<li class="list-inline-item"><a href="#" class="text-muted">Terms
+						of Service</a></li>
+				<li class="list-inline-item"><a href="#" class="text-muted">Contact
+						Us</a></li>
+			</ul>
+		</div>
+	</div>
 
-<!-- Footer -->
-<div class="footer">
-    <div class="container">
-        <p>&copy; 2024 Our Store. All rights reserved.</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#" class="text-muted">Privacy Policy</a></li>
-            <li class="list-inline-item"><a href="#" class="text-muted">Terms of Service</a></li>
-            <li class="list-inline-item"><a href="#" class="text-muted">Contact Us</a></li>
-        </ul>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>

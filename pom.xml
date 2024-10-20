@@ -36,6 +36,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
 		<dependency>
@@ -73,11 +78,18 @@
 		</dependency>
 
 
+		<!--		<dependency>-->
+		<!--			<groupId>com.paytm</groupId>-->
+		<!--			<artifactId>paytm-checksum</artifactId>-->
+		<!--			<version>1.2.0</version>-->
+		<!--		</dependency>-->
+
+
 		<dependency>
-			<groupId>com.paytm</groupId>
-			<artifactId>paytm-checksum</artifactId>
-			<version>1.2.0</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+
 
 		<dependency>
 
@@ -89,6 +101,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<!--			<version>1.18.28</version> &lt;!&ndash; Or latest version
+			&ndash;&gt;-->
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -107,6 +125,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!--
+		https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
+		<!--<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+-->
 
 	</dependencies>
 	<repositories>

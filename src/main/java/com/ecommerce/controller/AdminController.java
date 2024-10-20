@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,8 @@ import com.ecommerce.model.Product;
 import com.ecommerce.service.CatogeryService;
 import com.ecommerce.service.ProductService;
 import com.ecommercedto.ProductDTO;
+
+import net.bytebuddy.implementation.bind.annotation.Default;
 
 @Controller
 public class AdminController {
@@ -77,11 +80,26 @@ public class AdminController {
 	///////// ------Product Section ----------/////
 
 	@GetMapping("/admin/products")
-	public String getProducts(@RequestParam(defaultValue = "none") String sortBy,
-			@RequestParam(defaultValue = "asc") String order, Model model) {
-		model.addAttribute("products", productService.getAllProduct(sortBy, order));
-		return "products";
+	public String getProducts(
+	        @RequestParam(defaultValue = "1") int pageNumber,
+	        @RequestParam(defaultValue = "8") int pageSize,
+	        @RequestParam(defaultValue = "none") String sortBy,
+	        @RequestParam(defaultValue = "asc") String order, Model model) {
+
+	    // Fetch the page of products from the service
+	    Page<Product> productPage = productService.getAllProduct(sortBy, order, pageNumber, pageSize);
+
+	    // Add products and pagination metadata to the model
+	    model.addAttribute("products", productPage.getContent());
+	    model.addAttribute("currentPage", pageNumber);
+	    model.addAttribute("totalPages", productPage.getTotalPages());
+	    model.addAttribute("pageSize", pageSize);
+	    model.addAttribute("sortBy", sortBy);
+	    model.addAttribute("order", order);
+
+	    return "products";
 	}
+
 
 	@GetMapping("/admin/products/add")
 	public String getProductAdd(Model model) {
