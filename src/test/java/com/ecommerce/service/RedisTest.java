@@ -16,13 +16,13 @@ public class RedisTest {
     @Test
     void testSendMail() {
         // Setting a value in Redis
-        redisTemplate.opsForValue().set("email", "shubhampatel872005@gmail.com");
+        redisTemplate.opsForValue().set("email", "gmail@gmail.com");
         
         // Retrieving the value from Redis
         Object email = redisTemplate.opsForValue().get("email");
         
         // Assertion to ensure the value retrieved matches what was set
-        assertEquals("shubhampatel872005@gmail.com", email);
+        assertEquals("gmail@gmail.com", email);
         
         // For debugging purposes (optional)
         System.out.println("Stored email in Redis: " + email);
