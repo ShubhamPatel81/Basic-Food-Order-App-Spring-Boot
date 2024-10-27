@@ -1,6 +1,8 @@
 # Food Ordering Website
 This is a fully functional food ordering website built using Spring Boot and Spring MVC, featuring full authentication to ensure secure access for users. The application allows customers to browse the food menu, place orders, and manage their account, while administrators can manage the food items and orders.
 
+### For admin Login use -Email - admin@gmail.com  Password - 12345
+
 ## Features
 **User Authentication & Authorization:**
 The website implements full user authentication and authorization, using Spring Security to ensure that sensitive data and actions are protected.
