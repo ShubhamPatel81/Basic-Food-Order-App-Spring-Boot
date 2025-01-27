@@ -47,7 +47,7 @@ public class ProductService {
 
 	    // Fetch the page of products from the repository
 	    return productRepo.findAll(pageable);  // Return the entire page object, not just the content
-	}
+	}     
 
     
     
