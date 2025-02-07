@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .successHandler(googleOauth2SuccessHandler)
 	        .and()
 	        .logout()
+			
 	        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	        .logoutSuccessUrl("/login")
 	        .invalidateHttpSession(true)
