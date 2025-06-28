@@ -23,6 +23,9 @@ import com.ecommerce.service.CustomUserDetailService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
+	CustomSuccessHandler customSuccessHandler;
+	
+	@Autowired
 	GoogleOauth2SuccessHandler googleOauth2SuccessHandler;
 	@Autowired
 	CustomUserDetailService customUserDetailService;
@@ -41,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .loginPage("/login")
 	        .permitAll()
 	        .failureUrl("/login?error=true")
-	        .defaultSuccessUrl("/home")
+	        .successHandler(customSuccessHandler())
 	        .usernameParameter("email")
 	        .passwordParameter("password")
 	        .and()
@@ -50,7 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .successHandler(googleOauth2SuccessHandler)
 	        .and()
 	        .logout()
-			
 	        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 	        .logoutSuccessUrl("/login")
 	        .invalidateHttpSession(true)
@@ -77,5 +79,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/resources/**", "/static/**", "/images/**", "/productImages/**", "/css/**", "/js/**");
 		
 		  
+	}
+	@Bean
+	public CustomSuccessHandler customSuccessHandler() {
+	    return new CustomSuccessHandler();
 	}
 }
