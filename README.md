@@ -23,3 +23,9 @@ Admins can log in to manage the food menu (add, edit, and delete items) and view
 ***Hibernate / JPA:*** For database interaction.
 ***Thymeleaf:** As the template engine for the frontend.
  ***H2:*** As the database (depending on the profile).
+
+ ![Home Page](src/main/resources/static/ScreenShots/1.png)
+![Catogeries Page](src/main/resources/static/ScreenShots/2.png)
+![Admin Page](src/main/resources/static/ScreenShots/5.png)
+![Add Product](src/main/resources/static/ScreenShots/6.png)
+
